@@ -151,18 +151,18 @@ class assignationController extends Controller
         } 
         
     }
-    
-    public function filter_assing(Request $request){
-        $user_id = $request->get('user_id');
-        $curso_id = $request->get('curso_id');
 
-        $assignements= assignation::orderBy('id','DES')
-            ->user_id($user_id)
-            ->curso_id($curso_id)
-            ->paginate(4);
-        
-            return response()->json($assignements);
+    public function assignation_by_user($id){
+        $users = DB::table('assignments')
+            ->join('users', 'assignments.user_id', '=', 'users.id')
+            ->join('cursos', 'assignments.curso_id', '=', 'cursos.id')
+            ->select('assignments.id','assignments.curso_id','assignments.user_id','users.nombre','cursos.nombre_curso','cursos.intensidad_horaria')
+            ->where('users.id', '=', $id)
+            ->get();
+        return response()->json($users);
     }
+    
+   
 
 
 
