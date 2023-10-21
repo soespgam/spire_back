@@ -24,7 +24,7 @@ class userController extends Controller
                 return response()->json([
                     'status'=>true,
                     'message'=>'usuario logueado correctamente',
-                    "token"=>$token
+                    "ascces_token"=>$token
                 ],200);
 
             }else{
@@ -65,11 +65,7 @@ class userController extends Controller
                 'status'=>true,
                 'message'=>'usuario creado exitosamente',$newUser
             ],200);
-
-        
-
     }
-
 
     public function get_user_profile(){
         return response()->json([
@@ -77,9 +73,7 @@ class userController extends Controller
             'message'=>'perfil usuario',
             "data"=>auth()->user()
         ],200);
-
     }
-
 
     public function logout(){
         auth()->user()->tokens()->delete();
@@ -90,7 +84,6 @@ class userController extends Controller
         ],200);
 
     }
-
 
     public function get_usuarios()
     {
@@ -104,7 +97,6 @@ class userController extends Controller
             ]);
         }
     }
-
 
     public function update(Request $request)
     {

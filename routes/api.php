@@ -21,6 +21,7 @@ Route::group(['middleware'=>["auth:sanctum"]],function(){
     Route::get('/profile_user',[userController::class,'get_user_profile']);
     Route::get('/logout',[userController::class,'logout']);
 });
+
 Route::get('/usuarios',[userController::class,'get_usuarios']);
 Route::post('/update_usuario',[userController::class,'update']);
 Route::delete('user/{id}',[userController::class,'destroy_user']);
