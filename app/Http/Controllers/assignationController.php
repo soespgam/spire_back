@@ -41,9 +41,16 @@ class assignationController extends Controller
 
     public function get_assignments(){
         try {
-            
-            $usuarios= assignation::all();
-            return response()->json($usuarios);
+            $asignaciones = DB::table('assignments')
+            ->join('users', 'assignments.user_id', '=', 'users.id')
+            ->join('cursos', 'assignments.curso_id', '=', 'cursos.id')
+            ->select('assignments.id','assignments.curso_id','assignments.user_id','users.nombre','cursos.nombre_curso','cursos.intensidad_horaria')
+            ->get();
+        return response()->json($asignaciones);
+
+
+           /*  $usuarios= assignation::all();
+            return response()->json($usuarios); */
 
         } catch (\Throwable $th) {
             
@@ -161,11 +168,6 @@ class assignationController extends Controller
             ->get();
         return response()->json($users);
     }
-    
-   
-
-
-
 
 }
 
