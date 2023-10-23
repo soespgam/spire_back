@@ -38,7 +38,10 @@ Route::delete('curso/{id}',[cursosController::class,'destroy']);
 //CRUD asignaciones
 Route::post('/create',[assignationController::class,'create']);
 Route::get('/assignments',[assignationController::class,'get_assignments']);
-Route::get('assignation/{id}',[assignationController::class,'get_assignation']);
 Route::post('/update_assignation',[assignationController::class,'update_assignation']);
-Route::delete('assignation/{id}',[assignationController::class,'destroy_assignation']);
+Route::delete('assignation_user/{id}',[assignationController::class,'destroy_assignation']);
+Route::get('alumnos',[assignationController::class,'get_alumnos']);
+Route::get('assignation/{id}',[assignationController::class,'get_assignation']);
 Route::get('assignation_by_user/{id}',[assignationController::class,'assignation_by_user']);
+
+

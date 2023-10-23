@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\DB;
 
 class assignationController extends Controller
 {
+    public function get_alumnos(){
+        $alumnos =DB::table('users')
+        ->select('users.id','users.nombre')
+        ->where('users.rol', '=', 'ALUMNO')
+        ->get();
+        return response()->json($alumnos);
+    }
+
     public function create(Request $request){
 
         $curso_by_id= curso::find($request->curso_id);
@@ -47,11 +55,6 @@ class assignationController extends Controller
             ->select('assignments.id','assignments.curso_id','assignments.user_id','users.nombre','cursos.nombre_curso','cursos.intensidad_horaria')
             ->get();
         return response()->json($asignaciones);
-
-
-           /*  $usuarios= assignation::all();
-            return response()->json($usuarios); */
-
         } catch (\Throwable $th) {
             
             return response()->json([
@@ -61,8 +64,15 @@ class assignationController extends Controller
         }
     }
 
+    
+
     public function get_assignation(string $id){
-        $assignation_by_id= assignation::find($id);
+        $assignation_by_id = DB::table('assignments')
+            ->join('users', 'assignments.user_id', '=', 'users.id')
+            ->join('cursos', 'assignments.curso_id', '=', 'cursos.id')
+            ->select('assignments.id','assignments.curso_id','assignments.user_id','users.nombre','cursos.nombre_curso','cursos.intensidad_horaria')
+            ->where('assignments.id', '=', $id)
+            ->get();
 
         if(!is_null($assignation_by_id)){
             try {
@@ -160,13 +170,13 @@ class assignationController extends Controller
     }
 
     public function assignation_by_user($id){
-        $users = DB::table('assignments')
+        $assignation = DB::table('assignments')
             ->join('users', 'assignments.user_id', '=', 'users.id')
             ->join('cursos', 'assignments.curso_id', '=', 'cursos.id')
             ->select('assignments.id','assignments.curso_id','assignments.user_id','users.nombre','cursos.nombre_curso','cursos.intensidad_horaria')
             ->where('users.id', '=', $id)
             ->get();
-        return response()->json($users);
+        return response()->json($assignation);
     }
 
 }
